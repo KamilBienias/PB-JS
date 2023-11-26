@@ -14,3 +14,10 @@ function insertHeavyBall(arr) {
 insertHeavyBall(balls);
 console.log(balls);
 
+const groupA = balls.slice(0, 3);
+const groupB = balls.slice(3, 6);
+const groupC = balls.slice(6, 8);
+console.log("groupA", groupA);
+console.log("groupB", groupB);
+console.log("groupC", groupC);
+
