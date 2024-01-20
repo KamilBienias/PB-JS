@@ -99,24 +99,14 @@ function isThreeOfAKind(cards) {
     return false;
 }
 
-function isStraight(cards) {
+function isTwoPair(cards) {
     // Check for Two Pair (Two pairs of cards with the same rank)
     // Implement your logic here
     return false;
 }
 
-function isThreeOfAKind(cards) {
-    // Check for One Pair (A pair of cards with the same rank)
-    // Implement your logic here
-    return false;
-}
-
-function isTwoPair(cards) {
-    // Implement your logic here
-    return false;
-}
-
 function isOnePair(cards) {
+    // Check for One Pair (A pair of cards with the same rank)
     // Implement your logic here
     return false;
 }
