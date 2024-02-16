@@ -16,7 +16,7 @@ function createDeck() {
 
 function shuffleDeck(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(Math.random() * (i + 1)); // j expected from 0 to i
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
 }
@@ -58,65 +58,211 @@ function determinePokerHand(cards) {
 }
 
 function isRoyalFlush(cards) {
-    // Check for a Royal Flush (A, K, Q, J, 10 of the same suit)
-    // Implement your logic here
-    return false;
+    const royalRanks = ['10', 'J', 'Q', 'K', 'A'];
+    const sameSuit = cards.every(card => card.suit === cards[0].suit);
+    const ranksInOrder = cards.map(card => card.rank).reverse();
+    console.log(ranksInOrder);
+    return sameSuit && ranksInOrder.join('') === royalRanks.join('');
 }
+
 
 function isStraightFlush(cards) {
-    // Check for a Straight Flush (Five consecutive cards of the same suit)
-    // Implement your logic here
+    return isFlush(cards) && isStraight(cards);
+}
+
+// four cards of the same rank
+function isFourOfAKind(cards) {
+    for (let i = 0; i <= cards.length - 4; i++) {
+        if (cards[i].rank === cards[i + 1].rank && cards[i].rank === cards[i + 2].rank && cards[i].rank === cards[i + 3].rank) {
+            return true;
+        }
+    }
     return false;
 }
 
-function isFourOfAKind(cards) {
-    // Check for Four of a Kind (Four cards of the same rank)
-    // Implement your logic here
-    return false;
-}
 
 function isFullHouse(cards) {
-    // Check for a Full House (Three cards of one rank and two cards of another rank)
-    // Implement your logic here
-    return false;
+    // object for counting card ranks
+    const rankCounts = {};
+    // counting occurrences of individual card ranks
+    for (const card of cards) {
+        if (rankCounts[card.rank] === undefined) {
+            rankCounts[card.rank] = 1;
+        } else {
+            rankCounts[card.rank]++;
+        }
+    }
+
+    // array with occurrences of card ranks
+    const counts = Object.values(rankCounts);
+
+    const hasTwoOfAKind = counts.includes(2);
+    const hasThreeOfAKind = counts.includes(3);
+
+    return hasTwoOfAKind && hasThreeOfAKind;
 }
 
+
+// all cards of the same suit
 function isFlush(cards) {
-    // Check for a Flush (All cards of the same suit)
-    // Implement your logic here
-    return false;
+    return cards.every(card => card.suit === cards[0].suit);
 }
 
+// five consecutive cards
 function isStraight(cards) {
-    // Check for a Straight (Five consecutive cards)
-    // Implement your logic here
-    return false;
+    sortCardsByRank(cards);
+
+    const rankOrder = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+    for (let i = 0; i < cards.length - 1; i++) {
+        const rankDifference = Math.abs(rankOrder.indexOf(cards[i].rank) - rankOrder.indexOf(cards[i + 1].rank));
+        if (rankDifference !== 1) {
+            return false;
+        }
+    }
+    return true;
 }
 
+// three cards of the same rank
 function isThreeOfAKind(cards) {
-    // Check for Three of a Kind (Three cards of the same rank)
-    // Implement your logic here
+    for (let i = 0; i <= cards.length - 3; i++) {
+        if (cards[i].rank === cards[i + 1].rank && cards[i].rank === cards[i + 2].rank) {
+            return true;
+        }
+    }
     return false;
 }
 
 function isTwoPair(cards) {
-    // Check for Two Pair (Two pairs of cards with the same rank)
-    // Implement your logic here
-    return false;
+    const rankCounts = {};
+
+    // counting occurrences of individual card ranks
+    for (const card of cards) {
+        if (rankCounts[card.rank] === undefined) {
+            rankCounts[card.rank] = 1;
+        } else {
+            rankCounts[card.rank]++;
+        }
+    }
+
+    // array with occurrences of card ranks
+    const counts = Object.values(rankCounts);
+
+    // checking if there are two pairs
+    const pairsCount = counts.filter(count => count === 2).length;
+    return pairsCount === 2;
 }
+
 
 function isOnePair(cards) {
-    // Check for One Pair (A pair of cards with the same rank)
-    // Implement your logic here
+    for (let i = 0; i < cards.length - 1; i++) {
+        if (cards[i].rank === cards[i + 1].rank) {
+            return true;
+        }
+    }
     return false;
 }
 
-// Main program
+// examples
+
+// poker królewski
+const handRoyalFlush = [
+    { suit: 'Hearts', rank: 'A' }, // As Kier
+    { suit: 'Hearts', rank: 'K' }, // Król Kier
+    { suit: 'Hearts', rank: 'Q' }, // Królowa Kier
+    { suit: 'Hearts', rank: 'J' }, // Walet Kier
+    { suit: 'Hearts', rank: '10' } // Dziesiątka Kier
+];
+
+// poker kolorowy
+const handStraightFlush = [
+    { suit: 'Diamonds', rank: '8' }, // Ósemka Karo
+    { suit: 'Diamonds', rank: '7' }, // Siódemka Karo
+    { suit: 'Diamonds', rank: '6' }, // Szóstka Karo
+    { suit: 'Diamonds', rank: '5' }, // Piątka Karo
+    { suit: 'Diamonds', rank: '4' } // Czwórka Karo
+];
+
+// kareta
+const handFourOfAKind = [
+    { suit: 'Clubs', rank: 'A' }, // As Trefl
+    { suit: 'Diamonds', rank: 'A' }, // As Karo
+    { suit: 'Hearts', rank: 'A' }, // As Kier
+    { suit: 'Spades', rank: 'A' }, // As Pik
+    { suit: 'Diamonds', rank: 'K' } // Król Karo
+];
+
+// full (trójka i para)
+const handFullHouse = [
+    { suit: 'Hearts', rank: 'K' }, // Król Kier
+    { suit: 'Spades', rank: 'K' }, // Król Pik
+    { suit: 'Clubs', rank: 'K' }, // Król Trefl
+    { suit: 'Hearts', rank: 'Q' }, // Królowa Kier
+    { suit: 'Spades', rank: 'Q' } // Królowa Pik
+];
+
+// kolor
+const handFlush = [
+    { suit: 'Hearts', rank: 'A' }, // As Kier
+    { suit: 'Hearts', rank: 'K' }, // Król Kier
+    { suit: 'Hearts', rank: '8' }, // Ósemka Kier
+    { suit: 'Hearts', rank: '5' }, // Piątka Kier
+    { suit: 'Hearts', rank: '2' } // Dwójka Kier
+];
+
+// strit (5 kart sąsiednich)
+const handStraight = [
+    { suit: 'Clubs', rank: '10' }, // Dziesiątka Trefl
+    { suit: 'Hearts', rank: '9' }, // Dziewiątka Kier
+    { suit: 'Diamonds', rank: '8' }, // Ósemka Karo
+    { suit: 'Spades', rank: '7' }, // Siódemka Pik
+    { suit: 'Hearts', rank: '6' } // Szóstka Kier
+];
+
+// trójka
+const handThreeOfAKind = [
+    { suit: 'Hearts', rank: 'Q' }, // Królowa Kier
+    { suit: 'Clubs', rank: 'Q' }, // Królowa Trefl
+    { suit: 'Diamonds', rank: 'Q' }, // Królowa Karo
+    { suit: 'Spades', rank: '9' }, // Dziewiątka Pik
+    { suit: 'Hearts', rank: '2' } // Dwójka Kier
+];
+
+// dwie pary
+const handTwoPair = [
+    { suit: 'Hearts', rank: 'A' }, // As Kier
+    { suit: 'Clubs', rank: 'A' }, // As Trefl
+    { suit: 'Spades', rank: '9' }, // Dziewiątka Pik
+    { suit: 'Diamonds', rank: '9' }, // Dziewiątka Karo
+    { suit: 'Hearts', rank: '2' } // Dwójka Kier
+];
+
+// para
+const handOnePair = [
+    { suit: 'Hearts', rank: 'K' }, // Król Kier
+    { suit: 'Clubs', rank: 'K' }, // Król Trefl
+    { suit: 'Diamonds', rank: '9' }, // Dziewiątka Karo
+    { suit: 'Spades', rank: '8' }, // Ósemka Pik
+    { suit: 'Hearts', rank: '2' } // Dwójka Kier
+];
+
+// wysoka karta
+const handHighCard = [
+    { suit: 'Hearts', rank: 'A' }, // As Kier
+    { suit: 'Clubs', rank: 'K' }, // Król Trefl
+    { suit: 'Diamonds', rank: '9' }, // Dziewiątka Karo
+    { suit: 'Spades', rank: '8' }, // Ósemka Pik
+    { suit: 'Hearts', rank: '2' } // Dwójka Kier
+];
+
+
+// main program
 const deck = createDeck();
 shuffleDeck(deck);
 const hand = dealCards(deck, 5);
 sortCardsByRank(hand);
 console.log("Your hand:", hand);
 
+// we can comment out the above card drawing and then below, instead of 'hand', insert examples
 const pokerHand = determinePokerHand(hand);
 console.log("Your poker hand:", pokerHand);
