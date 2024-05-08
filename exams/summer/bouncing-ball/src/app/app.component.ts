@@ -103,17 +103,16 @@ export class AppComponent implements OnInit {
 
   // Funkcja generująca losowy kierunek inny niż aktualny kierunek piłki
   generateRandomDirection(currentDirection: { dx: number; dy: number }): { dx: number; dy: number } {
-    let dx = Math.random() < 0.5 ? -1 : 1;
-    let dy = Math.random() < 0.5 ? -1 : 1;
-
-    // Sprawdzamy czy nowy kierunek jest różny od aktualnego
-    while (dx === currentDirection.dx && dy === currentDirection.dy) {
+    let dx: number, dy: number;
+  
+    do {
       dx = Math.random() < 0.5 ? -1 : 1;
       dy = Math.random() < 0.5 ? -1 : 1;
-    }
-
+    } while (dx === currentDirection.dx && dy === currentDirection.dy);
+  
     return { dx, dy };
   }
+  
 
   getCellBackgroundColor(cell: string): string {
     if (cell === 'X') {
