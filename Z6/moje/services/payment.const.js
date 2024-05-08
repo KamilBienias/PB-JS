@@ -1,0 +1,6 @@
+const PAYMENT_STATUS = {
+    PENDING: "PENDING",
+    SUCCES: "SUCCES"
+}
+
+export {PAYMENT_STATUS};

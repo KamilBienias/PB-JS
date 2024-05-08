@@ -257,12 +257,12 @@ const handHighCard = [
 
 
 // main program
-const deck = createDeck();
-shuffleDeck(deck);
-const hand = dealCards(deck, 5);
-sortCardsByRank(hand);
-console.log("Your hand:", hand);
+// const deck = createDeck();
+// shuffleDeck(deck);
+// const hand = dealCards(deck, 5);
+// sortCardsByRank(hand);
+// console.log("Your hand:", hand);
 
 // we can comment out the above card drawing and then below, instead of 'hand', insert examples
-const pokerHand = determinePokerHand(hand);
+const pokerHand = determinePokerHand(handRoyalFlush);
 console.log("Your poker hand:", pokerHand);
