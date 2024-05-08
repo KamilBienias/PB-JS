@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   
       console.log('Next X:', nextX, 'Next Y:', nextY);
   
-      // if (nextX >= 0 && nextX < this.board[0].length && nextY >= 0 && nextY < this.board.length) {
+      
       if (this.board[nextY][nextX] === 'X') {
 
           // odbicie od poziomej ściany
@@ -95,8 +95,7 @@ export class AppComponent implements OnInit {
       }
 
       // Odśwież planszę co 500ms
-      setTimeout(moveBall, 100);
-      // }
+      setTimeout(moveBall, 500);
     };
   
     moveBall();
@@ -116,4 +115,15 @@ export class AppComponent implements OnInit {
     return { dx, dy };
   }
 
+  getCellBackgroundColor(cell: string): string {
+    if (cell === 'X') {
+      return 'gray';
+    } else if (cell === 'Y') {
+      return 'yellow';
+    } else if (cell === '1') {
+      return 'red';
+    } else {
+      return 'white';
+    }
+  }
 }

@@ -7,17 +7,3 @@ table {
     height: 20px;
     border: 1px solid black;
   }
-  
-  .wall {
-    background-color: gray;
-  }
-  
-  .ball {
-    background-color: red;
-    border-radius: 50%;
-  }
-  
-  .bounce-object {
-    background-color: blue;
-  }
-  
