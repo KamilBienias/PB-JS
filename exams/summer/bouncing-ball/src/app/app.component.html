@@ -1,8 +1,10 @@
 <div>
   <h1>Bouncing Ball Simulator</h1>
   <table>
-    <tr *ngFor="let row of board">
-      <td *ngFor="let cell of row" [ngClass]="{'wall': cell === 'X', 'ball': cell === '1', 'bounce-object': cell === 'Y'}">{{ cell }}</td>
+    <tr *ngFor="let row of board; let rowIndex = index">
+      <td *ngFor="let cell of row; let colIndex = index" [ngClass]="{'wall': cell === 'X', 'ball': cell === '1', 'green': rowIndex === ballPosition.y && colIndex === ballPosition.x, 'white': cell === '0' && previousBallPosition?.y === rowIndex && previousBallPosition?.x === colIndex}">
+        {{ cell }}
+      </td>
     </tr>
   </table>
 </div>
