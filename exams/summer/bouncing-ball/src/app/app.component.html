@@ -1,0 +1,8 @@
+<div>
+  <h1>Bouncing Ball Simulator</h1>
+  <table>
+    <tr *ngFor="let row of board">
+      <td *ngFor="let cell of row" [ngClass]="{'wall': cell === 'X', 'ball': cell === '1', 'bounce-object': cell === 'Y'}">{{ cell }}</td>
+    </tr>
+  </table>
+</div>
