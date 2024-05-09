@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { board_table } from './board-data';
 
 @Component({
   selector: 'app-root',
@@ -9,32 +10,14 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
-  board: string[][] = [
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '1', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', '0', 'X', 'X', 'X', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', '0', 'X', '0', '0', '0', '0', 'Y', '0', 'X'],// trzeci od prawej był Y
-    ['X', '0', '0', 'X', 'X', 'X', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', '0', 'X', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', 'Y', '0', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'X'],
-    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-  ];
+export class AppComponent{
+
+  board: string[][] = board_table;
 
   ballPosition: { x: number; y: number; } = { x: 1, y: 1 }; // Początkowa pozycja piłki
   previousBallPosition: { x: number; y: number } | null = null; // Poprzednia pozycja piłki
 
-  constructor() { }
-
-  ngOnInit(): void {
+  startGame(): void {
     this.simulateBouncingBall();
   }  
 
